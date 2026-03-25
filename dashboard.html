@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Carbon Footprint Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css" />
+</head>
+<body>
+
+    <header class="top-navbar">
+        <div class="title">Carbon Footprint Tracker</div>
+        <div class="right-box">
+            <div id="userName">Welcome, User</div>
+            <button class="logout-btn" id="logoutBtn">Logout</button>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <div class="card">
+            <h2>Daily Carbon Footprint Entry</h2>
+            <p class="note">
+                Enter your daily activities below. The system will calculate your CO₂ emission and store it in MySQL.
+            </p>
+
+            <form id="dailyForm">
+                <div class="grid">
+                    <div class="field-group">
+                        <label for="entry_date">Date</label>
+                        <input type="date" id="entry_date" required />
+                    </div>
+
+                    <div class="field-group">
+                        <label for="electricity_kwh">Electricity Used (kWh)</label>
+                        <input type="number" id="electricity_kwh" step="0.01" min="0" placeholder="e.g. 12" />
+                    </div>
+
+                    <div class="field-group">
+                        <label for="bike_km">Bike Distance (km)</label>
+                        <input type="number" id="bike_km" step="0.01" min="0" placeholder="e.g. 5" />
+                    </div>
+
+                    <div class="field-group">
+                        <label for="car_km">Car Distance (km)</label>
+                        <input type="number" id="car_km" step="0.01" min="0" placeholder="e.g. 10" />
+                    </div>
+
+                    <div class="field-group">
+                        <label for="bus_km">Bus Distance (km)</label>
+                        <input type="number" id="bus_km" step="0.01" min="0" placeholder="e.g. 8" />
+                    </div>
+
+                    <div class="field-group">
+                        <label for="train_km">Train Distance (km)</label>
+                        <input type="number" id="train_km" step="0.01" min="0" placeholder="e.g. 15" />
+                    </div>
+
+                    <div class="field-group">
+                        <label for="lpg_kg">LPG Used (kg)</label>
+                        <input type="number" id="lpg_kg" step="0.01" min="0" placeholder="e.g. 1" />
+                    </div>
+
+                    <div class="field-group">
+                        <label for="waste_kg">Waste Generated (kg)</label>
+                        <input type="number" id="waste_kg" step="0.01" min="0" placeholder="e.g. 2" />
+                    </div>
+
+                    <div class="field-group">
+                        <label for="recycled_kg">Recycled Waste (kg)</label>
+                        <input type="number" id="recycled_kg" step="0.01" min="0" placeholder="e.g. 1" />
+                    </div>
+
+                    <div class="field-group">
+                        <label for="water_liters">Water Used (liters)</label>
+                        <input type="number" id="water_liters" step="0.01" min="0" placeholder="e.g. 120" />
+                    </div>
+
+                    <div class="field-group">
+                        <label for="veg_meals">Veg Meals</label>
+                        <input type="number" id="veg_meals" min="0" placeholder="e.g. 2" />
+                    </div>
+
+                    <div class="field-group">
+                        <label for="nonveg_meals">Non-Veg Meals</label>
+                        <input type="number" id="nonveg_meals" min="0" placeholder="e.g. 1" />
+                    </div>
+                </div>
+
+                <button type="submit" class="save-btn">Save Daily Data</button>
+            </form>
+        </div>
+
+        <div class="card">
+            <h2>Today's Result</h2>
+            <div class="result-box">
+                <h3 id="resultText">Total CO₂ Emission: Not calculated yet</h3>
+                <p id="suggestionText">Your suggestion will appear here after saving daily data.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Saved History</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Electricity</th>
+                        <th>Bike KM</th>
+                        <th>Car KM</th>
+                        <th>Bus KM</th>
+                        <th>Train KM</th>
+                        <th>Total CO₂ (kg)</th>
+                    </tr>
+                </thead>
+                <tbody id="entriesBody">
+                    <tr>
+                        <td colspan="7">No records found</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <h2>Tips to Reduce Carbon Footprint</h2>
+            <div class="tips">
+                <p>• Use public transport or carpool whenever possible.</p>
+                <p>• Turn off lights, fans, and appliances when not in use.</p>
+                <p>• Reduce food waste and recycle more.</p>
+                <p>• Prefer more vegetarian meals during the week.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>
