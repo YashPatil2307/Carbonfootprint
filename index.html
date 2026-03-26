@@ -1,44 +1,1148 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login & Register</title>
-    <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Carbon Footprint Tracker</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- AOS CSS (Animate On Scroll) -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        /* CSS Variables for Eco-Friendly Theme */
+        :root {
+            --primary: #14A44D;
+            --primary-dark: #0A5C36;
+            --primary-light: #E8F5E9;
+            --secondary: #2E7D32;
+            --text-dark: #1F2937;
+            --text-gray: #4B5563;
+            --bg-light: #F9FAFB;
+            --white: #FFFFFF;
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* Reusable Components */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 28px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--white);
+            box-shadow: 0 10px 20px -10px var(--primary);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 25px -10px var(--secondary);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary-dark);
+            border: 2px solid var(--primary-dark);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary-dark);
+            color: var(--white);
+            transform: translateY(-3px);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: var(--primary-dark);
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .section-desc {
+            text-align: center;
+            color: var(--text-gray);
+            max-width: 700px;
+            margin: 0 auto 50px auto;
+            font-size: 1.125rem;
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 0;
+            z-index: 1000;
+            transition: var(--transition);
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            font-weight: 500;
+            color: var(--text-gray);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.5rem;
+            color: var(--primary-dark);
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 160px 0 100px 0;
+            position: relative;
+            background: linear-gradient(135deg, var(--primary-light) 0%, var(--bg-light) 100%);
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            right: -100px;
+            width: 500px;
+            height: 500px;
+            background: var(--primary);
+            opacity: 0.05;
+            border-radius: 50%;
+            z-index: 0;
+        }
+
+        .hero-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 50px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content {
+            flex: 1;
+            max-width: 600px;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background-color: rgba(20, 164, 77, 0.1);
+            color: var(--primary);
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            margin-bottom: 24px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            color: var(--text-dark);
+            margin-bottom: 24px;
+        }
+
+        .hero h1 span {
+            color: var(--primary);
+            position: relative;
+        }
+
+        /* Small curved line under the span */
+        .hero h1 span::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background-color: rgba(20, 164, 77, 0.2);
+            border-radius: 4px;
+        }
+
+        .hero p {
+            font-size: 1.125rem;
+            color: var(--text-gray);
+            margin-bottom: 40px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .hero-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .hero-img-box {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            height: 400px;
+            background: linear-gradient(145deg, #18b556, #149345);
+            border-radius: 30px 100px 30px 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            border: 8px solid var(--white);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .hero-img-box i {
+            font-size: 10rem;
+            color: var(--white);
+            opacity: 0.9;
+        }
+
+        /* Floating elements for hero */
+        .floating-element {
+            position: absolute;
+            background: var(--white);
+            padding: 15px 20px;
+            border-radius: 15px;
+            box-shadow: var(--shadow-md);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-weight: 600;
+            color: var(--text-dark);
+            z-index: 2;
+        }
+
+        .fe-1 {
+            top: 50px;
+            left: -30px;
+            animation: float 5s ease-in-out infinite alternate;
+        }
+        
+        .fe-2 {
+            bottom: 30px;
+            right: -20px;
+            animation: float 7s ease-in-out infinite alternate-reverse;
+        }
+
+        .fe-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary-light);
+            color: var(--primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+        }
+
+        /* About Section */
+        .about {
+            padding: 100px 0;
+            background-color: var(--white);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .about-img {
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+        }
+
+        .about-img img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .about-img:hover img {
+            transform: scale(1.05);
+        }
+
+        .about-content h2 {
+            font-size: 2.2rem;
+            color: var(--primary-dark);
+            margin-bottom: 20px;
+        }
+
+        .about-content p {
+            color: var(--text-gray);
+            margin-bottom: 24px;
+            font-size: 1.05rem;
+        }
+
+        .about-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .about-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: var(--bg-light);
+            padding: 15px;
+            border-radius: 12px;
+            transition: var(--transition);
+        }
+
+        .about-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-sm);
+            background: var(--primary-light);
+        }
+
+        .about-icon {
+            color: var(--primary);
+            font-size: 1.25rem;
+        }
+
+        .about-text {
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 0.95rem;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 100px 0;
+            background-color: var(--bg-light);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background-color: var(--white);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 0;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            z-index: -1;
+            transition: height 0.4s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .feature-card:hover::before {
+            height: 100%;
+        }
+
+        .feature-card:hover h3, 
+        .feature-card:hover p {
+            color: var(--white);
+        }
+
+        .feature-icon-wrapper {
+            width: 80px;
+            height: 80px;
+            background-color: var(--primary-light);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 24px auto;
+            transition: var(--transition);
+        }
+
+        .feature-card:hover .feature-icon-wrapper {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .feature-icon-wrapper i {
+            font-size: 2rem;
+            color: var(--primary);
+            transition: var(--transition);
+        }
+
+        .feature-card:hover .feature-icon-wrapper i {
+            color: var(--white);
+        }
+
+        .feature-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 16px;
+            color: var(--text-dark);
+            transition: var(--transition);
+        }
+
+        .feature-card p {
+            color: var(--text-gray);
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+
+        /* DBMS Highlight Section */
+        .dbms {
+            padding: 100px 0;
+            background: linear-gradient(135deg, var(--text-dark) 0%, #111827 100%);
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Decorative Background Pattern */
+        .dbms::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(rgba(20, 164, 77, 0.15) 1px, transparent 1px);
+            background-size: 30px 30px;
+            opacity: 0.5;
+        }
+
+        .dbms .section-title {
+            color: var(--white);
+        }
+
+        .dbms .section-desc {
+            color: #9CA3AF;
+        }
+
+        .dbms-container {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .dbms-box {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 50px;
+            text-align: center;
+        }
+
+        .dbms-logo {
+            font-size: 5rem;
+            color: #00758F; /* MySQL Blue */
+            margin-bottom: 20px;
+            display: inline-block;
+            background: var(--white);
+            width: 120px;
+            height: 120px;
+            line-height: 120px;
+            border-radius: 50%;
+            box-shadow: 0 0 30px rgba(0, 117, 143, 0.3);
+        }
+
+        .dbms-box h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--white);
+        }
+
+        .dbms-box p {
+            color: #D1D5DB;
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            line-height: 1.8;
+        }
+
+        .dbms-tags {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .dbms-tag {
+            background: rgba(20, 164, 77, 0.2);
+            color: var(--primary);
+            border: 1px solid rgba(20, 164, 77, 0.3);
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* CTA Section */
+        .cta {
+            padding: 100px 0;
+            background-color: var(--primary);
+            text-align: center;
+            position: relative;
+            background-image: url('data:image/svg+xml;utf8,<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="dots" width="40" height="40" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="2" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100%" height="100%" fill="url(%23dots)"/></svg>');
+        }
+
+        .cta-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta h2 {
+            font-size: 3rem;
+            color: var(--white);
+            margin-bottom: 20px;
+        }
+
+        .cta p {
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 40px;
+        }
+
+        .btn-white {
+            background-color: var(--white);
+            color: var(--primary-dark);
+            font-size: 1.1rem;
+            padding: 15px 40px;
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-white:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            background-color: var(--bg-light);
+            color: var(--primary);
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--text-dark);
+            color: var(--white);
+            padding: 60px 0 20px 0;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 40px;
+        }
+
+        .footer-brand .logo {
+            color: var(--white);
+            margin-bottom: 20px;
+        }
+
+        .footer-brand p {
+            color: #9CA3AF;
+            max-width: 400px;
+            margin-bottom: 20px;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .footer-project h4 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-project h4::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 50%;
+            height: 2px;
+            background: var(--primary);
+        }
+
+        .project-details {
+            color: #9CA3AF;
+        }
+
+        .project-details li {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .project-details li i {
+            color: var(--primary);
+            font-size: 0.9rem;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            color: #6B7280;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero-container {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .hero-content {
+                max-width: 100%;
+            }
+
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+            
+            .floating-element {
+                display: none; /* Hide decorative elements on smaller screens */
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .about-img {
+                order: -1; /* Image appears first logically */
+                max-width: 600px;
+                margin: 0 auto;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none; /* In a real app, add a JS mobile menu toggle */
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--white);
+                flex-direction: column;
+                padding: 20px 0;
+                box-shadow: var(--shadow-md);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .about-list {
+                grid-template-columns: 1fr;
+            }
+
+            .dbms-box {
+                padding: 30px 20px;
+            }
+
+            .cta h2 {
+                font-size: 2.2rem;
+            }
+        }
+
+        /* Footprint Animation Styles */
+        #footprints-container {
+            position: fixed;
+            top: 0;
+            left: 10px;
+            width: 80px;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .footprint {
+            position: absolute;
+            opacity: 0;
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .footprint.visible {
+            opacity: 0.3;
+        }
+
+        .footprint-svg {
+            width: 36px;
+            height: 56px;
+            transition: width 0.3s ease, height 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .footprint-svg {
+                width: 24px;
+                height: 38px;
+            }
+            #footprints-container {
+                left: 5px;
+                width: 60px;
+            }
+        }
+    </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="form-box">
-            <h2 id="formTitle">Login</h2>
+    <!-- Footprints Animation Container -->
+    <div id="footprints-container"></div>
 
-            <form id="loginForm">
-                <input type="text" id="loginName" placeholder="Enter Name" required />
-                <input type="email" id="loginEmail" placeholder="Enter Email" required />
-                <input type="password" id="loginPassword" placeholder="Enter Password" required />
-                <button type="submit">Login</button>
-                <p>
-                    Not registered?
-                    <a href="#" id="showRegister">Register here</a>
-                </p>
-            </form>
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="container navbar-container">
+            <a href="#" class="logo">
+                <i class="fa-solid fa-leaf"></i> EcoTrack
+            </a>
+            
+            <div class="mobile-menu-btn" id="mobile-menu-btn">
+                <i class="fa-solid fa-bars"></i>
+            </div>
 
-            <form id="registerForm" style="display: none;">
-                <input type="text" id="registerName" placeholder="Enter Name" required />
-                <input type="email" id="registerEmail" placeholder="Enter Email" required />
-                <input type="password" id="registerPassword" placeholder="Enter Password" required />
-                <input type="password" id="confirmPassword" placeholder="Confirm Password" required />
-                <button type="submit">Register</button>
-                <p>
-                    Already have an account?
-                    <a href="#" id="showLogin">Login here</a>
-                </p>
-            </form>
-
-            <p id="message"></p>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="login.html" class="btn btn-primary" style="padding: 8px 24px;">Login</a></li>
+            </ul>
         </div>
-    </div>
+    </nav>
 
-    <script src="script.js"></script>
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container hero-container">
+            <div class="hero-content" data-aos="fade-right" data-aos-duration="1000">
+                <div class="hero-badge">
+                    <i class="fa-solid fa-earth-americas"></i> Eco-Friendly Living
+                </div>
+                <h1>Track Your <span>Carbon Footprint</span></h1>
+                <p>Understand your daily impact and make better choices for a greener future.</p>
+                <div class="hero-buttons">
+                    <a href="login.html" class="btn btn-primary">
+                        Get Started <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                    <a href="#about" class="btn btn-outline">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+            
+            <div class="hero-image" data-aos="zoom-in" data-aos-duration="1200" data-aos-delay="200">
+                <div class="hero-img-box">
+                    <i class="fa-solid fa-tree-city"></i>
+                </div>
+                
+                <!-- Floating Elements -->
+                <div class="floating-element fe-1">
+                    <div class="fe-icon"><i class="fa-solid fa-car"></i></div>
+                    <div>
+                        <div style="font-size: 0.8rem; color: var(--text-gray);">Transport</div>
+                        <div>2.1 kg CO₂</div>
+                    </div>
+                </div>
+                
+                <div class="floating-element fe-2">
+                    <div class="fe-icon" style="color: #F59E0B; background: #FEF3C7;"><i class="fa-solid fa-bolt"></i></div>
+                    <div>
+                        <div style="font-size: 0.8rem; color: var(--text-gray);">Energy</div>
+                        <div>5.4 kWh</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-img" data-aos="fade-right" data-aos-duration="1000">
+                    <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=2000&auto=format&fit=crop" alt="Lush green forest representing sustainability">
+                </div>
+                
+                <div class="about-content" data-aos="fade-left" data-aos-duration="1000">
+                    <h2>Understanding Your Impact</h2>
+                    <p>We help you monitor your daily habits to estimate your carbon footprint. By finding out where your emissions come from, you can take action to reduce them.</p>
+                    
+                    <div class="about-list">
+                        <div class="about-item">
+                            <i class="fa-solid fa-bus about-icon"></i>
+                            <span class="about-text">Transport & Commute</span>
+                        </div>
+                        <div class="about-item">
+                            <i class="fa-solid fa-plug about-icon"></i>
+                            <span class="about-text">Electricity Consumption</span>
+                        </div>
+                        <div class="about-item">
+                            <i class="fa-solid fa-utensils about-icon"></i>
+                            <span class="about-text">Dietary Habits</span>
+                        </div>
+                        <div class="about-item">
+                            <i class="fa-solid fa-recycle about-icon"></i>
+                            <span class="about-text">Waste & Recycling</span>
+                        </div>
+                    </div>
+                    
+                    <p>Your data is stored securely. Track your progress over time and see how small changes make a big difference.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">Core Capabilities</h2>
+            <p class="section-desc" data-aos="fade-up" data-aos-delay="100">Everything you need to monitor, analyze, and reduce your carbon emissions in an intuitive, easy-to-use interface.</p>
+            
+            <div class="features-grid">
+                <!-- Feature 1 -->
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="150">
+                    <div class="feature-icon-wrapper">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </div>
+                    <h3>Activity Tracking</h3>
+                    <p>Log your daily travel, food, energy use, and waste quickly and easily.</p>
+                </div>
+                
+                <!-- Feature 2 -->
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feature-icon-wrapper">
+                        <i class="fa-solid fa-calculator"></i>
+                    </div>
+                    <h3>Emission Calculation</h3>
+                    <p>Get instant, accurate calculations of your carbon emissions based on your daily logs.</p>
+                </div>
+                
+                <!-- Feature 3 -->
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="450">
+                    <div class="feature-icon-wrapper">
+                        <i class="fa-solid fa-chart-pie"></i>
+                    </div>
+                    <h3>Progress Insights</h3>
+                    <p>See how your habits change over time. View your history and track your improvements.</p>
+                </div>
+                
+                <!-- Feature 4 -->
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="600">
+                    <div class="feature-icon-wrapper">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+                    <h3>Easy Dashboard</h3>
+                    <p>View your progress clearly. Get personalized tips to help you reduce your daily footprint.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container cta-content" data-aos="zoom-in" data-aos-duration="1000">
+            <h2>Start Your Sustainable Journey</h2>
+            <p>Calculate your baseline today. Track improvements tomorrow. Save the planet forever.</p>
+            <a href="login.html" class="btn btn-white btn-lg">
+                <i class="fa-regular fa-user"></i> Create Your Account
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="#" class="logo">
+                        <i class="fa-solid fa-leaf"></i> EcoTrack
+                    </a>
+                    <p>A simple platform dedicated to helping you understand and reduce your daily carbon footprint.</p>
+                    <div class="footer-social">
+                        <a href="https://github.com" target="_blank" class="social-link"><i class="fa-brands fa-github"></i></a>
+                        <a href="#" class="social-link"><i class="fa-brands fa-linkedin-in"></i></a>
+                        <a href="#" class="social-link"><i class="fa-solid fa-globe"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-project">
+                    <h4>Join the Movement</h4>
+                    <ul class="project-details">
+                        <li><i class="fa-solid fa-leaf"></i> Eco-friendly</li>
+                        <li><i class="fa-solid fa-earth-americas"></i> Global Impact</li>
+                        <li><i class="fa-solid fa-users"></i> Community Driven</li>
+                        <li><i class="fa-solid fa-shield-halved"></i> Secure Data</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                &copy; 2026 Personal Carbon Footprint Tracker. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- AOS Script -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS animations
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true,
+            offset: 100
+        });
+
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.style.padding = '15px 0';
+                navbar.style.boxShadow = '0 10px 15px -3px rgba(0, 0, 0, 0.1)';
+            } else {
+                navbar.style.padding = '20px 0';
+                navbar.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
+            }
+        });
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const navLinks = document.getElementById('nav-links');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Footprint Animation Logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('footprints-container');
+            const totalFootprints = 12; // Reduced number of footprints for increased vertical spacing
+            const footprints = [];
+            
+            // Create footprints
+            for (let i = 0; i < totalFootprints; i++) {
+                const fp = document.createElement('div');
+                fp.className = 'footprint';
+                
+                // Position vertically evenly (from 5% to 95%)
+                const topPos = 5 + (i * (90 / (totalFootprints - 1))); 
+                fp.style.top = `${topPos}%`;
+                
+                // Zig-zag walking pattern
+                const isWestTrack = i % 2 === 0;
+                fp.style.left = isWestTrack ? '10px' : '40px'; // Increased horizontal spacing for larger footprints
+                
+                // When walking DOWN the page, the footprint on the left side of the screen is the Right Foot
+                const isLeftFoot = !isWestTrack;
+                
+                // Minimal, clean SVG footprint shape (solid shoe print)
+                const svgShoe = document.createElement('div');
+                svgShoe.innerHTML = `
+                <svg viewBox="0 0 100 160" class="footprint-svg" fill="var(--primary-dark)" style="display: block;" xmlns="http://www.w3.org/2000/svg">
+                  <!-- Shoe Ball -->
+                  <path d="M 45 10 C 75 10, 90 30, 85 60 C 80 90, 60 95, 45 95 C 20 95, 15 70, 20 40 C 25 20, 30 10, 45 10 Z" />
+                  <!-- Shoe Heel -->
+                  <path d="M 45 110 C 65 110, 75 125, 70 145 C 65 160, 45 160, 35 145 C 25 125, 30 110, 45 110 Z" />
+                </svg>`;
+                
+                // Our base SVG is a right footprint. Mirror it for the left foot.
+                if (isLeftFoot) {
+                    svgShoe.style.transform = 'scaleX(-1)';
+                }
+                fp.appendChild(svgShoe);
+                
+                // Base 180deg to make them face DOWN the page.
+                // Alternate rotations for natural walk: Left foot (-15deg), Right foot (+15deg)
+                const rotation = isLeftFoot ? (180 - 15) : (180 + 15);
+                const baseTransform = `rotate(${rotation}deg)`;
+                fp.dataset.baseTransform = baseTransform;
+                
+                // Initial hidden state: slightly lower to give a smooth upward floating glide on scroll
+                fp.style.transform = `translateY(30px) ${baseTransform}`;
+                
+                container.appendChild(fp);
+                footprints.push(fp);
+            }
+            
+            // Scroll handler
+            const handleScroll = () => {
+                const scrollTop = window.scrollY || document.documentElement.scrollTop;
+                // Calculate max scrollable height
+                const docHeight = Math.max(
+                    document.body.scrollHeight, 
+                    document.documentElement.scrollHeight
+                ) - window.innerHeight;
+                
+                if (docHeight <= 0) return;
+                
+                const scrollPercent = scrollTop / docHeight;
+                // Multiply by a factor slightly higher than 1 so all appear before the absolute end
+                const visibleCount = Math.floor(scrollPercent * totalFootprints * 1.1);
+                
+                footprints.forEach((fp, index) => {
+                    const baseTransform = fp.dataset.baseTransform;
+                    if (index < visibleCount) {
+                        fp.classList.add('visible');
+                        fp.style.transform = `translateY(0) ${baseTransform}`;
+                    } else {
+                        fp.classList.remove('visible');
+                        fp.style.transform = `translateY(20px) ${baseTransform}`;
+                    }
+                });
+            };
+            
+            window.addEventListener('scroll', handleScroll);
+            handleScroll(); // Trigger on load
+        });
+    </script>
 </body>
 </html>

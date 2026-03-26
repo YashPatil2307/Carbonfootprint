@@ -6,7 +6,7 @@ const formTitle = document.getElementById("formTitle");
 const message = document.getElementById("message");
 
 // Backend URL
-const BASE_URL = "http://localhost:3000";
+const BASE_URL = "";
 
 // Show Register Form
 if (showRegister) {
